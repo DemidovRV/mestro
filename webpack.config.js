@@ -20,7 +20,25 @@ module: {
             {
                 test: /\.css$/, 
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'] 
-            }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                  {
+                    loader: 'file-loader',
+                  },
+                ],
+              },
+              {
+                test: /\.(png|jpg|gif|ico|svg)$/,
+                use: [
+                        'file-loader?name=../images/[name].[ext]',
+                        {
+                                loader: 'image-webpack-loader',
+                                options: {}
+                        },
+                ]
+               }
         ]
     },
     devServer: {
