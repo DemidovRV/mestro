@@ -31,6 +31,9 @@ module: {
             template: './src/index.html', 
             filename: 'index.html'  
         }),
-        new WebpackMd5Hash()
+        new WebpackMd5Hash(),
+        new webpack.DefinePlugin({
+            'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+           })
     ]
 };
