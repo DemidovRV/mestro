@@ -1,0 +1,10 @@
+@import url(./_active/image-card_active.css);
+.image-card {
+    display: none;
+    max-width: 80vw;
+    max-height: 80vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;    
+    transform:translate(-50%,-50%);   
+}

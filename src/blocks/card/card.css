@@ -1,0 +1,13 @@
+@import url(./_active/card_active.css);
+@import url(./__close/card__close.css);
+@import url(./__image/card__image.css);
+@import url(./__content/card__content.css);
+.card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: none;
+}
