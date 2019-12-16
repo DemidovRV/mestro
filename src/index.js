@@ -25,6 +25,7 @@ class Popup {
   }
 }
 
+
 //Переменные
 const popupAddImg = new Popup('.popup__add-img');
 const popupEditProfile = new Popup('.popup__edit-profile');
