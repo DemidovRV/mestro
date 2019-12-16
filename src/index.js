@@ -3,6 +3,8 @@
   <script src="./validity.js"></script>
   <script src="./server.js"></script> */
 
+  import "./style.css";
+
 const formProfile = document.forms.profile;
 const userNameForm = formProfile.elements.userName;
 const userJobForm = formProfile.elements.userJob;
