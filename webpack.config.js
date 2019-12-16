@@ -1,5 +1,6 @@
 
 const path = require('path');
+const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
@@ -22,6 +23,9 @@ module: {
             }
         ]
     },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+      },
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css',
