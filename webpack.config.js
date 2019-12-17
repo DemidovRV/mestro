@@ -34,11 +34,11 @@ module: {
               {
                 test: /\.(png|jpg|gif|ico|svg)$/,
                 use: [
-                        'file-loader?name=../images/[name].[ext]',
-                        {
-                                loader: 'image-webpack-loader',
-                                options: {}
-                        },
+                    'file-loader?name=./images/[name].[ext]',
+                    {
+                            loader: 'image-webpack-loader',
+                            options: {}
+                    },
                 ]
                },
                {
@@ -47,9 +47,14 @@ module: {
                 }
         ]
     },
-    // devServer: {
-    //     contentBase: path.join(__dirname, 'dist'),
-    //   },
+    resolve: {
+        alias: {
+            images: path.resolve(__dirname, "images")
+        }
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+    },
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css',

@@ -1,43 +1,10 @@
-  import "./style.css";
-  import {Card} from './blocks/place-card/card.js';
+import "./style.css";
+import {Card} from './blocks/place-card/card.js';
+import {Popup} from './blocks/popup/popup';
+import {Api} from './blocks/api.js';
 
-const formProfile = document.forms.profile;
-const userNameForm = formProfile.elements.userName;
-const userJobForm = formProfile.elements.userJob;
-const userNameProfile = document.querySelector('.user-info__name');
-const userJobProfile = document.querySelector('.user-info__job');
-const saveProfileButton = document.querySelector(".popup__button_save-profile");
-// Класс
-class Popup {
-  constructor(popupSelector) {
-    this.popup = document.querySelector(popupSelector);
-    this.popup.querySelector('.popup__close').addEventListener('click', this.closePopup);
-  }
-
-  closePopup(event){   //метод закрытия попапа
-    event.target.parentElement.parentElement.classList.remove('popup_is-opened');
-  };
-
-  openForm(){   //метод открытия popup 
-    this.popup.classList.toggle('popup_is-opened');
-  }
-}
-
-
-//Переменные
 const popupAddImg = new Popup('.popup__add-img');
 const popupEditProfile = new Popup('.popup__edit-profile');
-
-document.querySelector('.user-info__button').addEventListener('click', function(){    
-  popupAddImg.openForm()
-}); 
-
-document.querySelector('.user-info__edit').addEventListener('click', function() {    
-  popupEditProfile.openForm();
-});
-
-
-
 const cardContain = document.querySelector('.places-list');
 const popupImage = document.querySelector('.card'); 
 
@@ -80,24 +47,7 @@ function addCardNew(event) {
   popupAddImg.openForm()
 };
 
-cardContain.addEventListener('click', function (event) {  
-  if (event.target.classList.contains('place-card__image')) { 
-    cardlist.openCard();
-    const popupImageItem = popupImage.querySelector('.card__image');
-    popupImageItem.src = event.target.style.backgroundImage.slice(5, event.target.style.backgroundImage.length - 2);
-  }
- });
-
-document.forms.imgPopup.addEventListener( 'submit', function(event) {
-  event.preventDefault(); 
-  cardlist.addCard(name.value, link.value)
-  form.reset();
-  popupAddImg.openForm()
-});
-
- 
 const addCardButton = popupWindow.querySelector('.popup__button');
-
 
 //функция проверки валидности input текста
 function validityInput(inputName, spanErrorSelector) { 
@@ -125,15 +75,12 @@ if (link.validity.valueMissing) {
   };
 });
 
-//активнсть кнопки "+"
-form.addEventListener('input', function (event) { 
-  if (name.value.length === 0 || link.value.length === 0) {
-    addCardButton.setAttribute('disabled', true);    
-  } else {
-    addCardButton.removeAttribute('disabled');
-    addCardButton.classList.add('popup__button_active');
-  }
-});
+
+
+const formProfile = document.forms.profile;
+const userNameForm = formProfile.elements.userName;
+const userJobForm = formProfile.elements.userJob;
+const saveProfileButton = document.querySelector(".popup__button_save-profile");
 
 // активность кнопки "сохранить"
 formProfile.addEventListener('input', function (event) { 
@@ -144,62 +91,7 @@ formProfile.addEventListener('input', function (event) {
    saveProfileButton.classList.add('popup__button_active');
  }});
 
-validityInput(userNameForm, '.error_userName');
-validityInput(userJobForm,  '.error_userJob');
-validityInput(name,  '.error_name');
-
-
-
-class Api {
-    constructor(options) {
-      this.options = options;    
-    }
-  
-    getInitialCards() {
-      return fetch(`${this.options.baseUrl}/cards`, { 
-        headers: this.options.headers
-      })
-      .then((res) => {
-        /* Можно лучше: так как проверка есть во всех запросах её можно вынести в отдельный метод чтобы не дублировать */
-        if (res.ok) {
-          return res.json();      
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })  
-    }
-  
-    passUserName(userNameForm, userJobForm) {
-      return fetch(`${this.options.baseUrl}/users/me`,  { 
-        method: 'PATCH',       
-        headers: this.options.headers      
-      ,
-        body: JSON.stringify({
-            name: userNameForm.value,
-            about: userJobForm.value
-        })      
-      })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();      
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      
-    }
-  
-    getUserData() {    
-       return fetch(`${this.options.baseUrl}/users/me`, { 
-        headers: this.options.headers
-      })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();      
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })  
-    }
-  };
-    
+ 
   const serverUrl = NODE_ENV === 'development' ? 'http://praktikum.tk/cohort4' : 'https://praktikum.tk/cohort4';
 
   const api = new Api({
@@ -209,7 +101,10 @@ class Api {
       'Content-Type': 'application/json'
     }
   });
-  
+
+  const userNameProfile = document.querySelector('.user-info__name');
+  const userJobProfile = document.querySelector('.user-info__job');
+
   //Авторизация пользователя
   function authorizationUser() {    
    api.getUserData()
@@ -247,7 +142,43 @@ class Api {
         popupEditProfile.openForm(); 
       });
   };
+
+  cardContain.addEventListener('click', function (event) {  
+    if (event.target.classList.contains('place-card__image')) { 
+      cardlist.openCard();
+      const popupImageItem = popupImage.querySelector('.card__image');
+      popupImageItem.src = event.target.style.backgroundImage.slice(5, event.target.style.backgroundImage.length - 2);
+    }
+   });
   
+  document.forms.imgPopup.addEventListener( 'submit', function(event) {
+    event.preventDefault(); 
+    cardlist.addCard(name.value, link.value)
+    form.reset();
+    popupAddImg.openForm()
+  });
+
+  //активнсть кнопки "+"
+form.addEventListener('input', function (event) { 
+  if (name.value.length === 0 || link.value.length === 0) {
+    addCardButton.setAttribute('disabled', true);    
+  } else {
+    addCardButton.removeAttribute('disabled');
+    addCardButton.classList.add('popup__button_active');
+  }
+});
+
+document.querySelector('.user-info__button').addEventListener('click', function(){    
+  popupAddImg.openForm()
+}); 
+
+document.querySelector('.user-info__edit').addEventListener('click', function() {    
+  popupEditProfile.openForm();
+});
+
+  validityInput(userNameForm, '.error_userName');
+  validityInput(userJobForm,  '.error_userJob');
+  validityInput(name,  '.error_name');
   authorizationUser();
   cardLoading();
   document.forms.profile.addEventListener( 'submit',  editProfile);
