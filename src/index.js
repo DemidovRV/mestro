@@ -47,6 +47,7 @@ function addCardNew(event) {
   popupAddImg.openForm()
 };
 
+
 const addCardButton = popupWindow.querySelector('.popup__button');
 
 //функция проверки валидности input текста
