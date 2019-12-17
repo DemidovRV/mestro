@@ -40,12 +40,16 @@ module: {
                                 options: {}
                         },
                 ]
-               }
+               },
+               {
+                test: /\.(eot|ttf|woff|woff2)$/,
+                loader: 'file-loader?name=./vendor/[name].[ext]'
+                }
         ]
     },
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-      },
+    // devServer: {
+    //     contentBase: path.join(__dirname, 'dist'),
+    //   },
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css',
