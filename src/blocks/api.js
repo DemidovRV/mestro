@@ -46,3 +46,13 @@ export class Api {
       })  
     }
   };
+
+  const serverUrl = NODE_ENV === 'development' ? 'http://praktikum.tk/cohort4' : 'https://praktikum.tk/cohort4';
+
+  export const api = new Api({
+    baseUrl: serverUrl,
+    headers: {
+      authorization: 'f1c92919-670b-4e03-af61-0e003923fc00',
+      'Content-Type': 'application/json'
+    }
+  });

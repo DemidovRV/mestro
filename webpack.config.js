@@ -48,9 +48,9 @@ module: {
         ]
     },
     
-    // devServer: {
-    //     contentBase: path.join(__dirname, 'dist'),
-    // },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css',
