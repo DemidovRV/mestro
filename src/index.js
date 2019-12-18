@@ -1,7 +1,7 @@
 import "./style.css";
 import {Card} from './blocks/place-card/card.js';
 import {Popup} from './blocks/popup/popup';
-import {Api} from './blocks/api.js';
+import {api} from './blocks/api.js';
 
 const popupAddImg = new Popup('.popup__add-img');
 const popupEditProfile = new Popup('.popup__edit-profile');
@@ -75,8 +75,6 @@ if (link.validity.valueMissing) {
   };
 });
 
-
-
 const formProfile = document.forms.profile;
 const userNameForm = formProfile.elements.userName;
 const userJobForm = formProfile.elements.userJob;
@@ -90,17 +88,6 @@ formProfile.addEventListener('input', function (event) {
    saveProfileButton.removeAttribute('disabled');
    saveProfileButton.classList.add('popup__button_active');
  }});
-
- 
-  const serverUrl = NODE_ENV === 'development' ? 'http://praktikum.tk/cohort4' : 'https://praktikum.tk/cohort4';
-
-  const api = new Api({
-    baseUrl: serverUrl,
-    headers: {
-      authorization: 'f1c92919-670b-4e03-af61-0e003923fc00',
-      'Content-Type': 'application/json'
-    }
-  });
 
   const userNameProfile = document.querySelector('.user-info__name');
   const userJobProfile = document.querySelector('.user-info__job');
